@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using reservations_api.DTOs.Requests;
+using reservations_api.DTOs.Responses;
 using reservations_api.Services;
 
 namespace reservations_api.Controllers;
@@ -44,5 +45,12 @@ public class ReservationsController : ControllerBase
 
       throw;
     }
+  }
+
+  [HttpGet]
+  public async Task<ActionResult<List<ReservationResponse>>> GetByDate([FromQuery] DateOnly date)
+  {
+    var reservations = await _reservationService.GetByDateAsync(date);
+    return Ok(reservations);
   }
 }
